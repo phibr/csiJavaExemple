@@ -21,6 +21,7 @@ abstract class GestAgenda {
     }
     public static void main(String arg[]) {
         char choix;
+        System.out.println("---------------------------------");
         Agenda agenda = new Agenda();
         do {
             agenda.afficher();

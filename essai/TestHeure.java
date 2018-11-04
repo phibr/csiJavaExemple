@@ -9,7 +9,7 @@ import temps.*;
 /**
  * TestHeure est une classe de test de la classe Heure
  *
- * @version 2
+ * @version 3
  */
 public class TestHeure {
     protected static Heure h1;
@@ -26,7 +26,7 @@ public class TestHeure {
      * teste les deux constructeurs de Heure en conditions normales
      */
     @Test
-    public void test1Constructeur()
+    public void test01Constructeur()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         Heure h;
         h = new Heure(14, 57);
@@ -41,7 +41,7 @@ public class TestHeure {
      * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourMinute
      */
     @Test(expected = ExceptionMauvaiseValeurPourMinute.class)
-    public void test2Constructeur()
+    public void test02Constructeur()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         new Heure(12, 61);
     }
@@ -52,7 +52,7 @@ public class TestHeure {
      * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourMinute
      */
     @Test(expected = ExceptionMauvaiseValeurPourMinute.class)
-    public void test3Constructeur()
+    public void test03Constructeur()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         new Heure("12:61");
     }
@@ -63,7 +63,7 @@ public class TestHeure {
      * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourHeure
      */
     @Test(expected = ExceptionMauvaiseValeurPourHeure.class)
-    public void test4Constructeur()
+    public void test04Constructeur()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         new Heure(25, 15);
     }
@@ -74,7 +74,7 @@ public class TestHeure {
      * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourHeure
      */
     @Test(expected = ExceptionMauvaiseValeurPourHeure.class)
-    public void test5Constructeur()
+    public void test05Constructeur()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         new Heure("25:15");
     }
@@ -84,7 +84,7 @@ public class TestHeure {
      * et aux limites (59 minutes, 23 heures)
      */
     @Test
-    public void test6uneMinuteDePlus() {
+    public void test06uneMinuteDePlus() {
         h1.uneMinuteDePlus();
         assertEquals("14h58", h1.toString());
         h1.uneMinuteDePlus();
@@ -108,7 +108,7 @@ public class TestHeure {
      * et à la limite (23 heures)
      */
     @Test
-    public void test7uneHeureDePlus()
+    public void test07uneHeureDePlus()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         Heure h = new Heure(22, 05);
         h.uneHeureDePlus();
@@ -122,7 +122,7 @@ public class TestHeure {
      * et aux limites (0 minute, 0 heure)
      */
     @Test
-    public void test8uneMinuteDeMoins()
+    public void test08uneMinuteDeMoins()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         Heure h;
         h = new Heure(16, 20);
@@ -141,7 +141,7 @@ public class TestHeure {
      * et à la limite (0 heure)
      */
     @Test
-    public void test9uneHeureDeMoins()
+    public void test09uneHeureDeMoins()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         Heure h;
         h = new Heure(16, 20);
@@ -150,5 +150,22 @@ public class TestHeure {
         h = new Heure(0, 20);
         h.uneHeureDeMoins();
         assertEquals("23h20", h.toString());
+    }
+
+    /**
+     * teste la méthode compareTo
+     */
+    @Test
+    public void test10compareTo()
+    throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
+        Heure h1, h2;
+        h1 = new Heure(16, 20);
+        h2 = new Heure(18, 20);
+        assertTrue(h1.compareTo(h2) < 0);
+        assertTrue(h2.compareTo(h1) > 0);
+        assertTrue(h1.compareTo(h1) == 0);
+        h2 = new Heure(16, 25);
+        assertTrue(h1.compareTo(h2) < 0);
+        assertTrue(h2.compareTo(h1) > 0);
     }
 }

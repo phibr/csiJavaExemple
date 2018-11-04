@@ -8,14 +8,14 @@ import temps.*;
 /**
  * TestDuree est une classe de test de la classe Duree
  *
- * @version 1
+ * @version 2
  */
 public class TestDuree {
     /**
      * teste les deux constructeurs de Duree en conditions normales
      */
     @Test
-    public void test1Constructeur()
+    public void test01Constructeur()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         Duree d;
         d = new Duree(1, 30);
@@ -30,7 +30,7 @@ public class TestDuree {
      * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourMinute
      */
     @Test(expected = ExceptionMauvaiseValeurPourMinute.class)
-    public void test2Constructeur()
+    public void test02Constructeur()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         new Duree(0, 61);
     }
@@ -41,7 +41,7 @@ public class TestDuree {
      * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourMinute
      */
     @Test(expected = ExceptionMauvaiseValeurPourMinute.class)
-    public void test3Constructeur()
+    public void test03Constructeur()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         new Duree("0:75");
     }
@@ -52,7 +52,7 @@ public class TestDuree {
      * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourHeure
      */
     @Test(expected = ExceptionMauvaiseValeurPourHeure.class)
-    public void test4Constructeur()
+    public void test04Constructeur()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         new Duree(-1, 0);
     }
@@ -63,7 +63,7 @@ public class TestDuree {
      * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourHeure
      */
     @Test(expected = ExceptionMauvaiseValeurPourHeure.class)
-    public void test5Constructeur()
+    public void test05Constructeur()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         new Heure("-1:15");
     }
@@ -73,7 +73,7 @@ public class TestDuree {
      * et à la limite (59 minutes)
      */
     @Test
-    public void test6uneMinuteDePlus()
+    public void test06uneMinuteDePlus()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         Duree d;
         d = new Duree(72, 58);
@@ -87,7 +87,7 @@ public class TestDuree {
      * teste la méthode une heure de plus
      */
     @Test
-    public void test7uneHeureDePlus()
+    public void test07uneHeureDePlus()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         Duree d = new Duree(23, 15);
         d.uneHeureDePlus();
@@ -99,7 +99,7 @@ public class TestDuree {
      * et aux limites (0 minute, 0 heure)
      */
     @Test
-    public void test8uneMinuteDeMoins()
+    public void test08uneMinuteDeMoins()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         Duree d;
         d = new Duree(10, 0);
@@ -117,7 +117,7 @@ public class TestDuree {
      * et à la limite (0 heure)
      */
     @Test
-    public void test9uneHeureDeMoins()
+    public void test09uneHeureDeMoins()
     throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
         Duree d;
         d = new Duree(12, 0);
@@ -126,5 +126,22 @@ public class TestDuree {
         d = new Duree(0, 30);
         d.uneHeureDeMoins();
         assertEquals("00h00", d.toString());
+    }
+
+    /**
+     * teste la méthode compareTo
+     */
+    @Test
+    public void test10compareTo()
+    throws ExceptionMauvaiseValeurPourHeure, ExceptionMauvaiseValeurPourMinute {
+        Duree d1, d2;
+        d1 = new Duree(12, 0);
+        d2 = new Duree(13, 0);
+        assertTrue(d1.compareTo(d2) < 0);
+        assertTrue(d1.compareTo(d1) == 0);
+        assertTrue(d2.compareTo(d1) > 0);
+        d2 = new Duree(12, 10);
+        assertTrue(d1.compareTo(d2) < 0);
+        assertTrue(d2.compareTo(d1) > 0);
     }
 }

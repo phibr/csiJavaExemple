@@ -1,6 +1,9 @@
 import agenda.*;
 import outils.*;
 
+/**
+ * GestAgenda représente l'application de gestion d'agenda
+ */
 abstract class GestAgenda {
     private static void ajouterEvenement(Agenda a) {
         String nom, txtDate, txtHeure, txtDuree;
@@ -19,6 +22,11 @@ abstract class GestAgenda {
             System.out.println(e);
         }
     }
+    /**
+     * le programme principal
+     * 
+     * @param arg un tableau de chaînes de caractères non utilisé
+     */
     public static void main(String arg[]) {
         char choix;
         System.out.println("---------------------------------");

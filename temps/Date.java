@@ -22,7 +22,7 @@ public class Date implements Comparable<Date> {
      * @param a un entier qui détermine l'année
      * 
      * @exception ExceptionMauvaisJour exception indiquant si le jour est incorrect (par exemple <= 0 ou > 31)
-     * @exception ExceptionMauvaisMois exception indiquant si le mois est incorrect (en hors de [1 - 12])
+     * @exception ExceptionMauvaisMois exception indiquant si le mois est incorrect (en dehors de [1 - 12])
      * @exception ExceptionMauvaiseAnnee exception indiquant si l'année est incorrecte
      */
     private void initialise(int j, int m, int a)

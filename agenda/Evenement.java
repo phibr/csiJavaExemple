@@ -14,6 +14,8 @@ import java.lang.Comparable;
  * @see Agenda
  */
 public class Evenement implements Comparable<Evenement> {
+    private static Heure uneHeure = null;
+    private static Heure vingtTroisHeures = null;
     private String designation;
     private Date date;
     private Heure heure;
@@ -46,6 +48,8 @@ public class Evenement implements Comparable<Evenement> {
         date = new Date(jour, mois, annee);
         this.heure = new Heure(heure, minute);
         duree = new Duree(1, 0);
+        if (uneHeure == null) try { uneHeure = new Heure(1, 0); } catch (Exception e) { }
+        if (vingtTroisHeures == null) try { vingtTroisHeures = new Heure(23, 0); } catch (Exception e) { }
     }
     /**
      * constructeur d'Evenement
@@ -72,6 +76,8 @@ public class Evenement implements Comparable<Evenement> {
         date = new Date(txtDate);
         heure = new Heure(txtHeure);
         duree = new Duree(txtDuree);
+        if (uneHeure == null) try { uneHeure = new Heure(1, 0); } catch (Exception e) { }
+        if (vingtTroisHeures == null) try { vingtTroisHeures = new Heure(23, 0); } catch (Exception e) { }
     }
     /**
      * convertit l'événement en un texte
@@ -103,5 +109,43 @@ public class Evenement implements Comparable<Evenement> {
                 return diffHeures;
         } else
             return diffDates;
+    }
+    /**
+     * positionne l'événement un jour plus tôt
+     */
+    public void passerALaVeille() {
+        date.passerALaVeille();
+    }
+    /**
+     * positionne l'événement un jour plus tard
+     */
+    public void passerAuLendemain() {
+        date.passerAuLendemain();
+    }
+    /**
+     * positionne l'événement une heure plus tard
+     */
+    public void repousserD1Heure() {
+        heure.uneHeureDePlus();
+        if (heure.compareTo(uneHeure) < 0) passerAuLendemain();
+    }
+    /**
+     * positionne l'événement une heure plus tôt
+     */
+    public void avancerD1Heure() {
+        heure.uneHeureDeMoins();
+        if (heure.compareTo(vingtTroisHeures) >= 0) passerALaVeille();
+    }
+    /**
+     * change la durée de l'événement
+     * 
+     * @param txtDuree une chaîne de caractères notant la nouvelle durée au format hhh:mm
+     * @exception ExceptionMauvaiseValeurPourHeure une exception si la nouvelle durée a une valeur incorrecte de heure
+     * @exception ExceptionMauvaiseValeurPourMinute une exception si la nouvelle durée a une valeur incorrecte de minute
+     */
+    public void changerDuree(String txtDuree)
+    throws ExceptionMauvaiseValeurPourHeure,
+           ExceptionMauvaiseValeurPourMinute {
+        duree = new Duree(txtDuree);
     }
 }

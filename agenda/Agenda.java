@@ -52,10 +52,39 @@ public class Agenda {
      * affiche l'agenda à la console
      */
     public void afficher() {
+        afficher(null);
+    }
+    /**
+     * affiche l'agenda à la console
+     * 
+     * @param particulier un événement à distinguer à l'affichage
+     */
+    public void afficher(Evenement particulier) {
         int num = 1;
         for(Evenement evt : contenu) {
-            System.out.println(num + ") " + evt);
+            if (evt != particulier)
+                System.out.println(" " + num + ") " + evt);
+            else
+                System.out.println("{" + num + ") " + evt + "}");
             num++;
         }
+    }
+    /**
+     * renvoie un élément de l'agenda
+     * 
+     * @param index un entier indiquant l'événement considéré,
+     * le permier élément étant numéro 1
+     * @return l'événement de l'agenda ayant le numéro index
+     */
+    public Evenement evenement(int index) {
+        return contenu.get(index - 1);
+    }
+    /**
+     * supprimer un événement de l'agenda
+     * 
+     * @param e un événement
+     */
+    public void supprimer(Evenement e) {
+        contenu.remove(e);
     }
 }

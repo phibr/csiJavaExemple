@@ -3,6 +3,9 @@ package temps;
 import java.util.StringTokenizer;
 import java.lang.Integer;
 import java.lang.Comparable;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  * Temps est la classe de base pour l'héritage de Heure et Durée
@@ -34,6 +37,13 @@ abstract class Temps implements Comparable<Temps> {
             throw new ExceptionMauvaiseValeurPourHeure("Valeur incorrecte de heure (" + h + ") pour une instance de " + classe);
         heure = h;
         minute = m;
+    }
+    /**
+     * constructeur par défaut
+     */
+    public Temps() {
+        heure = 0;
+        minute = 0;
     }
     /**
      * initialise les variables d'instance heure et minute
@@ -131,5 +141,27 @@ abstract class Temps implements Comparable<Temps> {
             return minute - autreTemps.minute;
         } else
             return heure - autreTemps.heure;
+    }
+    /**
+     * enregistre le temps considéré dans un fichier binaire
+     * 
+     * @param s une instance de DataOutputStream
+     * 
+     * @exception IOException une exception levée en cas de problème au cours de l'écriture dans le fichier
+     */
+    public void enregistreDans(DataOutputStream s) throws IOException {
+        s.writeInt(heure);
+        s.writeInt(minute);
+    }
+    /**
+     * charge le temps considéré depuis un fichier binaire
+     * 
+     * @param s une instance de DataInputStream
+     * 
+     * @exception IOException une exception levée en cas de problème au cours de la lecture dans le fichier
+     */
+    public void chargeDepuis(DataInputStream s) throws IOException {
+        heure = s.readInt();
+        minute = s.readInt();
     }
 }

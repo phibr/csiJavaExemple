@@ -1,12 +1,10 @@
 package agenda;
 
-/*
-import temps.Date;
-import temps.Heure;
-import temps.Duree;
-*/
 import temps.*;
 import java.lang.Comparable;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  * Evenenement représente un élément d'agenda
@@ -20,6 +18,17 @@ public class Evenement implements Comparable<Evenement> {
     private Date date;
     private Heure heure;
     private Duree duree;
+    /**
+     * constructeur par défaut
+     */
+    public Evenement() {
+        designation = null;
+        date = null;
+        heure = null;
+        duree = null;
+        if (uneHeure == null) try { uneHeure = new Heure(1, 0); } catch (Exception e) { }
+        if (vingtTroisHeures == null) try { vingtTroisHeures = new Heure(23, 0); } catch (Exception e) { }
+    }
     /**
      * constructeur d'Evenement
      * 
@@ -147,5 +156,34 @@ public class Evenement implements Comparable<Evenement> {
     throws ExceptionMauvaiseValeurPourHeure,
            ExceptionMauvaiseValeurPourMinute {
         duree = new Duree(txtDuree);
+    }
+    /**
+     * enregistre l'événement considéré dans un fichier binaire
+     * 
+     * @param s une instance de DataOutputStream
+     * 
+     * @exception IOException une exception levée en cas de problème au cours de l'écriture dans le fichier
+     */
+    public void enregistreDans(DataOutputStream s) throws IOException {
+        s.writeUTF(designation);
+        date.enregistreDans(s);
+        heure.enregistreDans(s);
+        duree.enregistreDans(s);
+    }
+    /**
+     * charge l'événement considéré depuis un fichier binaire
+     * 
+     * @param s une instance de DataInputStream
+     * 
+     * @exception IOException une exception levée en cas de problème au cours de la lecture dans le fichier
+     */
+    public void chargeDepuis(DataInputStream s) throws IOException {
+        designation = s.readUTF();
+        date = new Date();
+        date.chargeDepuis(s);
+        heure = new Heure();
+        heure.chargeDepuis(s);
+        duree = new Duree();
+        duree.chargeDepuis(s);
     }
 }

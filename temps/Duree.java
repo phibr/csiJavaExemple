@@ -6,6 +6,12 @@ package temps;
 public class Duree extends Temps {
     private static String quoi = "Duree";
     /**
+     * constructeur par défaut
+     */
+    public Duree() {
+        super();
+    }
+    /**
      * initialise les heures et les minutes de la durée
      * 
      * @param h un entier qui détermine l'heure

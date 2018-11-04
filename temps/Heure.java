@@ -6,6 +6,12 @@ package temps;
 public class Heure extends Temps {
     private static String quoi = "Heure";
     /**
+     * constructeur par défaut
+     */
+    public Heure() {
+        super();
+    }
+    /**
      * initialise l'heure et la minute de l'instant de la journée représenté par cet objet Heure
      * 
      * @param h un entier qui détermine l'heure

@@ -1,3 +1,9 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import agenda.*;
 import outils.*;
 
@@ -5,9 +11,27 @@ import outils.*;
  * GestAgenda représente l'application de gestion d'agenda
  */
 abstract class GestAgenda {
+    private static void charge(Agenda a) {
+        try {
+          DataInputStream s = new DataInputStream(new FileInputStream("agenda.data"));
+          a.chargeDepuis(s);
+          s.close();
+        } catch (Exception e) {
+          System.err.println("L'agenda n'a pas pu être initialisé à partir du fichier de données !");
+        }
+    }
+    private static void enregistre(Agenda a) {
+        try {
+          DataOutputStream s = new DataOutputStream(new FileOutputStream("agenda.data"));
+          a.enregistreDans(s);
+          s.close();
+        } catch(IOException e) {
+          System.err.println("L'agenda n'a pas pu être enregistré dans le fichier de données !");
+        }
+    }
     private static void ajouterEvenement(Agenda a) {
         String nom, txtDate, txtHeure, txtDuree;
-        System.out.println("Designation ?");
+        System.out.println("Désignation ?");
         nom = IN.getString();
         System.out.println("Date ?");
         txtDate = INTemps.getTexteDate();
@@ -63,6 +87,7 @@ abstract class GestAgenda {
         System.out.println("---------------------------------");
         Evenement courant = null;
         Agenda agenda = new Agenda();
+        charge(agenda);
         do {
             agenda.afficher(courant);
             afficherMenu(agenda, courant);
@@ -78,5 +103,6 @@ abstract class GestAgenda {
                 case 'd' : changerDuree(courant); break;
             }
         } while (choix != 'q');
+        enregistre(agenda);
     }
 }

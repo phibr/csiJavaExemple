@@ -3,6 +3,9 @@ package temps;
 import java.util.StringTokenizer;
 import java.lang.Integer;
 import java.lang.Comparable;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  * Date représente un jour de l'année
@@ -14,6 +17,14 @@ public class Date implements Comparable<Date> {
     private int jour;
     private int mois;
     private int annee;
+    /**
+     * constructeur par défaut
+     */
+    public Date() {
+        jour = 0;
+        mois = 0;
+        annee = 0;
+    }
     /**
      * donne des valeurs aux variables d'instance de l'objet Date
      * 
@@ -208,5 +219,29 @@ public class Date implements Comparable<Date> {
                 return mois - autreDate.mois;
         } else
             return annee - autreDate.annee;
+    }
+    /**
+     * enregistre la date considérée dans un fichier binaire
+     * 
+     * @param s une instance de DataOutputStream
+     * 
+     * @exception IOException une exception levée en cas de problème au cours de l'écriture dans le fichier
+     */
+    public void enregistreDans(DataOutputStream s) throws IOException {
+        s.writeInt(jour);
+        s.writeInt(mois);
+        s.writeInt(annee);
+    }
+    /**
+     * charge la date considérée depuis un fichier binaire
+     * 
+     * @param s une instance de DataInputStream
+     * 
+     * @exception IOException une exception levée en cas de problème au cours de la lecture dans le fichier
+     */
+    public void chargeDepuis(DataInputStream s) throws IOException {
+        jour = s.readInt();
+        mois = s.readInt();
+        annee = s.readInt();
     }
 }

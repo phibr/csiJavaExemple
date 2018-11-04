@@ -2,6 +2,10 @@ package agenda;
 
 import java.util.LinkedList;
 import java.util.Collections;
+import java.io.FileOutputStream;
+import java.io.DataOutputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
 
 /**
  * Agenda représente un ensemble d'événements
@@ -62,10 +66,11 @@ public class Agenda {
     public void afficher(Evenement particulier) {
         int num = 1;
         for(Evenement evt : contenu) {
-            if (evt != particulier)
-                System.out.println(" " + num + ") " + evt);
-            else
-                System.out.println("{" + num + ") " + evt + "}");
+            if (evt != particulier) {
+                System.out.println("  " + num + ") " + evt);
+            } else {
+                System.out.println("{ " + num + ") " + evt + " }");
+            }
             num++;
         }
     }
@@ -80,11 +85,40 @@ public class Agenda {
         return contenu.get(index - 1);
     }
     /**
-     * supprimer un événement de l'agenda
+     * supprime un événement de l'agenda
      * 
      * @param e un événement
      */
     public void supprimer(Evenement e) {
         contenu.remove(e);
+    }
+    /**
+     * enregistre l'agenda dans un fichier binaire
+     * 
+     * @param s une instance de DataOutputStream
+     * 
+     * @exception IOException une exception levée en cas de problème au cours de l'écriture dans le fichier
+     */
+    public void enregistreDans(DataOutputStream s) throws IOException {
+        s.writeInt(contenu.size());
+        for(Evenement e : contenu) {
+            e.enregistreDans(s);
+        }
+        s.close();
+    }
+    /**
+     * charge l'agenda depuis un fichier binaire
+     * 
+     * @param s une instance de DataInputStream
+     * 
+     * @exception IOException une exception levée en cas de problème au cours de la lecture dans le fichier
+     */
+    public void chargeDepuis(DataInputStream s) throws IOException {
+        int n = s.readInt();
+        for(int i = 0; i < n; i++) {
+            Evenement e = new Evenement();
+            e.chargeDepuis(s);
+            ajouter(e);
+        }
     }
 }

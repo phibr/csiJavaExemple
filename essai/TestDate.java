@@ -21,7 +21,7 @@ public class TestDate {
         Date d;
         d = new Date(5, 11, 2018);
         assertEquals("5/11/2018", d.toString());
-        d = new Date(31, 12, 2018);
+        d = new Date("31/12/2018");
         assertEquals("31/12/2018", d.toString());
     }
 

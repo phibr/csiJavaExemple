@@ -38,7 +38,7 @@ public class TestHeure {
     /**
      * teste le constructeur de Heure ayant 2 entiers en paramètres
      * avec une valeur incorrecte de la minute
-     * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourMinute
+     * le test réussit en levant l'exception ExceptionMauvaiseValeurPourMinute
      */
     @Test(expected = ExceptionMauvaiseValeurPourMinute.class)
     public void test02Constructeur()
@@ -49,7 +49,7 @@ public class TestHeure {
     /**
      * teste le constructeur de Heure ayant une chaîne de caractères en paramètres
      * avec une valeur incorrecte de la minute
-     * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourMinute
+     * le test réussit en levant l'exception ExceptionMauvaiseValeurPourMinute
      */
     @Test(expected = ExceptionMauvaiseValeurPourMinute.class)
     public void test03Constructeur()
@@ -60,7 +60,7 @@ public class TestHeure {
     /**
      * teste le constructeur de Heure ayant 2 entiers en paramètres
      * avec une valeur incorrecte de l'heure
-     * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourHeure
+     * le test réussit en levant l'exception ExceptionMauvaiseValeurPourHeure
      */
     @Test(expected = ExceptionMauvaiseValeurPourHeure.class)
     public void test04Constructeur()
@@ -71,7 +71,7 @@ public class TestHeure {
     /**
      * teste le constructeur de Heure ayant une chaîne de caractères en paramètres
      * avec une valeur incorrecte de l'heure
-     * le test réussit en levant l'exeption ExceptionMauvaiseValeurPourHeure
+     * le test réussit en levant l'exception ExceptionMauvaiseValeurPourHeure
      */
     @Test(expected = ExceptionMauvaiseValeurPourHeure.class)
     public void test05Constructeur()

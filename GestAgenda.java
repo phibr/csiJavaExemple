@@ -84,11 +84,11 @@ abstract class GestAgenda {
      */
     public static void main(String arg[]) {
         char choix;
-        System.out.println("---------------------------------");
         Evenement courant = null;
         Agenda agenda = new Agenda();
         charge(agenda);
         do {
+            System.out.println();
             agenda.afficher(courant);
             afficherMenu(agenda, courant);
             choix = IN.getChar();

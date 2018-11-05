@@ -14,9 +14,9 @@ import java.io.IOException;
  * @author Philippe Brutus et tous les membres du groupe B3 CSI 2018-2019
  */
 public class Date implements Comparable<Date> {
-    private int jour;
-    private int mois;
-    private int annee;
+    private byte jour;
+    private byte mois;
+    private short annee;
     /**
      * constructeur par défaut
      */
@@ -38,8 +38,8 @@ public class Date implements Comparable<Date> {
      */
     private void initialise(int j, int m, int a)
     throws ExceptionMauvaisJour, ExceptionMauvaisMois, ExceptionMauvaiseAnnee {
-        if (m < 1 || m > 12) throw new ExceptionMauvaisMois(m); else mois = m;
-        if (a < 1) throw new ExceptionMauvaiseAnnee(a); else annee = a;
+        if (m < 1 || m > 12) throw new ExceptionMauvaisMois(m); else mois = (byte)m;
+        if (a < 1) throw new ExceptionMauvaiseAnnee(a); else annee = (short)a;
         int jmax = nombreDeJoursDuMois(m, a);
         if (j < 1 || j > jmax) {
             String msg;
@@ -51,7 +51,7 @@ public class Date implements Comparable<Date> {
                 msg += "le mois de " + nomDuMois(m) + " " + a + ")";
             throw new ExceptionMauvaisJour(msg);
         } else
-            jour = j;
+            jour = (byte)j;
     }
     /**
      * construit une date en donnant des valeurs à ses variables d'instance
@@ -81,9 +81,9 @@ public class Date implements Comparable<Date> {
     throws ExceptionMauvaisJour, ExceptionMauvaisMois, ExceptionMauvaiseAnnee {
         StringTokenizer st = new StringTokenizer(texte, "/");
         int j, m, a;
-        j = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        a = Integer.parseInt(st.nextToken());
+        j = (byte)Integer.parseInt(st.nextToken());
+        m = (byte)Integer.parseInt(st.nextToken());
+        a = (short)Integer.parseInt(st.nextToken());
         initialise(j, m, a);
     }
     /**
@@ -197,7 +197,7 @@ public class Date implements Comparable<Date> {
                 mois = 12;
                 annee --;
             }
-            jour = nombreDeJoursDuMois(mois, annee);
+            jour = (byte)nombreDeJoursDuMois(mois, annee);
         }
     }
     /**
@@ -223,25 +223,25 @@ public class Date implements Comparable<Date> {
     /**
      * enregistre la date considérée dans un fichier binaire
      * 
-     * @param s une instance de DataOutputStream
+     * @param s une instance de DataOutputStream qui représente le fichier
      * 
      * @exception IOException une exception levée en cas de problème au cours de l'écriture dans le fichier
      */
     public void enregistreDans(DataOutputStream s) throws IOException {
-        s.writeInt(jour);
-        s.writeInt(mois);
-        s.writeInt(annee);
+        s.writeByte(jour);
+        s.writeByte(mois);
+        s.writeShort(annee);
     }
     /**
      * charge la date considérée depuis un fichier binaire
      * 
-     * @param s une instance de DataInputStream
+     * @param s une instance de DataInputStream qui représente le fichier
      * 
      * @exception IOException une exception levée en cas de problème au cours de la lecture dans le fichier
      */
     public void chargeDepuis(DataInputStream s) throws IOException {
-        jour = s.readInt();
-        mois = s.readInt();
-        annee = s.readInt();
+        jour = s.readByte();
+        mois = s.readByte();
+        annee = s.readShort();
     }
 }

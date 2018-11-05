@@ -23,9 +23,9 @@ public class Evenement implements Comparable<Evenement> {
      */
     public Evenement() {
         designation = null;
-        date = null;
-        heure = null;
-        duree = null;
+        date = new Date();
+        heure = new Heure();
+        duree = new Duree();
         if (uneHeure == null) try { uneHeure = new Heure(1, 0); } catch (Exception e) { }
         if (vingtTroisHeures == null) try { vingtTroisHeures = new Heure(23, 0); } catch (Exception e) { }
     }
@@ -160,7 +160,7 @@ public class Evenement implements Comparable<Evenement> {
     /**
      * enregistre l'événement considéré dans un fichier binaire
      * 
-     * @param s une instance de DataOutputStream
+     * @param s une instance de DataOutputStream qui représente le fichier
      * 
      * @exception IOException une exception levée en cas de problème au cours de l'écriture dans le fichier
      */
@@ -173,17 +173,14 @@ public class Evenement implements Comparable<Evenement> {
     /**
      * charge l'événement considéré depuis un fichier binaire
      * 
-     * @param s une instance de DataInputStream
+     * @param s une instance de DataInputStream qui représente le fichier
      * 
      * @exception IOException une exception levée en cas de problème au cours de la lecture dans le fichier
      */
     public void chargeDepuis(DataInputStream s) throws IOException {
         designation = s.readUTF();
-        date = new Date();
         date.chargeDepuis(s);
-        heure = new Heure();
         heure.chargeDepuis(s);
-        duree = new Duree();
         duree.chargeDepuis(s);
     }
 }

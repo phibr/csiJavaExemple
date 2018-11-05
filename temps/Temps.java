@@ -11,8 +11,8 @@ import java.io.IOException;
  * Temps est la classe de base pour l'héritage de Heure et Durée
  */
 abstract class Temps implements Comparable<Temps> {
-    protected int heure;
-    protected int minute;
+    protected short heure;
+    protected byte minute;
     /**
      * initialise les variables d'instance heure et minute
      * 
@@ -35,8 +35,8 @@ abstract class Temps implements Comparable<Temps> {
         boolean heureIncorrecte = (borneSupHeure) ? (h < 0 || h > 23) : (h < 0);
         if (heureIncorrecte)
             throw new ExceptionMauvaiseValeurPourHeure("Valeur incorrecte de heure (" + h + ") pour une instance de " + classe);
-        heure = h;
-        minute = m;
+        heure = (short)h;
+        minute = (byte)m;
     }
     /**
      * constructeur par défaut
@@ -82,8 +82,8 @@ abstract class Temps implements Comparable<Temps> {
            ExceptionMauvaiseValeurPourMinute {
         StringTokenizer st = new StringTokenizer(texte, ":");
         int h, m;
-        h = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
+        h = (short)Integer.parseInt(st.nextToken());
+        m = (byte)Integer.parseInt(st.nextToken());
         initialise(h, m, quoi, borneSupHeure);
     }
     /**
@@ -145,23 +145,23 @@ abstract class Temps implements Comparable<Temps> {
     /**
      * enregistre le temps considéré dans un fichier binaire
      * 
-     * @param s une instance de DataOutputStream
+     * @param s une instance de DataOutputStream qui représente le fichier
      * 
      * @exception IOException une exception levée en cas de problème au cours de l'écriture dans le fichier
      */
     public void enregistreDans(DataOutputStream s) throws IOException {
-        s.writeInt(heure);
-        s.writeInt(minute);
+        s.writeShort(heure);
+        s.writeByte(minute);
     }
     /**
      * charge le temps considéré depuis un fichier binaire
      * 
-     * @param s une instance de DataInputStream
+     * @param s une instance de DataInputStream qui représente le fichier
      * 
      * @exception IOException une exception levée en cas de problème au cours de la lecture dans le fichier
      */
     public void chargeDepuis(DataInputStream s) throws IOException {
-        heure = s.readInt();
-        minute = s.readInt();
+        heure = s.readShort();
+        minute = s.readByte();
     }
 }

@@ -95,7 +95,7 @@ public class Agenda {
     /**
      * enregistre l'agenda dans un fichier binaire
      * 
-     * @param s une instance de DataOutputStream
+     * @param s une instance de DataOutputStream qui représente le fichier
      * 
      * @exception IOException une exception levée en cas de problème au cours de l'écriture dans le fichier
      */
@@ -104,12 +104,11 @@ public class Agenda {
         for(Evenement e : contenu) {
             e.enregistreDans(s);
         }
-        s.close();
     }
     /**
      * charge l'agenda depuis un fichier binaire
      * 
-     * @param s une instance de DataInputStream
+     * @param s une instance de DataInputStream qui représente le fichier
      * 
      * @exception IOException une exception levée en cas de problème au cours de la lecture dans le fichier
      */

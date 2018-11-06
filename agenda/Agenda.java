@@ -1,6 +1,7 @@
 package agenda;
 
 import java.sql.*;
+import temps.*;
 
 /**
  * Agenda représente un ensemble d'événements
@@ -18,6 +19,12 @@ public class Agenda {
         BD = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda", "root", "");
     }
     /**
+     * destructeur
+     */
+    public void finalize() {
+        try { BD.close(); } catch (SQLException e) { }
+    }
+    /**
      * teste si l'agenda est vide
      * 
      * @return vrai quant l'agenda est vide, faux dans le cas contraire
@@ -31,7 +38,16 @@ public class Agenda {
      * @return un entier indiquant combien l'agenda contient d'événements
      */
     public int taille() {
-        // return select count(*) from evenement
+        int n = 0;
+        try {
+            Statement s = BD.createStatement();
+            ResultSet rs;
+            rs = s.executeQuery("select count(*) from evenement");
+            rs.next();
+            n = rs.getInt(1);
+            rs.close();
+        } catch(SQLException e) { }
+        return n;
     }
     /**
      * ajoute un événement à l'agenda
@@ -45,19 +61,26 @@ public class Agenda {
      * affiche l'agenda à la console
      */
     public void afficher() {
-        Statement s = BD.createStatement();
-        ResultSet rs;
-        rs = s.executeQuery("select * from evenement");
-        while (rs.next()) {
-            int n = rs.getInt("numero");
-            String txtDate = rs.getString("datevt");
-            int heure = rs.getInt("heure");
-            int duree = rs.getInt("duree");
-            String des = rs.getString("designation");
-            System.out.println(n + "   " + txtDate);
+        try {
+            Statement s = BD.createStatement();
+            ResultSet rs;
+            rs = s.executeQuery("select * from evenement order by datevt asc");
+            while (rs.next()) {
+                int n = rs.getInt("numero");
+                String txtDate = rs.getString("datevt");
+                int valeurH = rs.getInt("heure");
+                Heure h = null;
+                Duree d = null;
+                try { h = new Heure(valeurH); } catch(Exception e) { }
+                int valeurD = rs.getInt("duree");
+                try { d = new Duree(valeurD); } catch(Exception e) { }
+                String des = rs.getString("designation");
+                System.out.println(n + " Le " + txtDate + " : " + des + " a " + h + " (" + d + ")");
+            }
+            rs.close();
+        } catch(SQLException e) {
+            System.out.println(e);
         }
-        rs.close();
-        // select * from evenement
     }
     /**
      * affiche l'agenda à la console
@@ -75,6 +98,7 @@ public class Agenda {
      */
     public Evenement evenement(int cle) {
         // select * from evenement where cle = ?
+        return null;
     }
     /**
      * supprime un événement de l'agenda

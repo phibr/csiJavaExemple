@@ -39,6 +39,19 @@ public class Heure extends Temps {
         super(texte, quoi, true);
     }
     /**
+     * initialise l'heure et la minute de l'instant de la journée représenté par cet objet Heure
+     * 
+     * @param valeur un entier qui donne l'heure en minutes écoulées depuis minuit
+     * 
+     * @exception ExceptionMauvaiseValeurPourHeure exception indiquant si l'heure est incorrecte (< 0 ou > 23)
+     * @exception ExceptionMauvaiseValeurPourMinute exception indiquant si la minute est incorrecte (< 0 ou > 59])
+     */
+    public Heure(int valeur)
+    throws ExceptionMauvaiseValeurPourHeure,
+           ExceptionMauvaiseValeurPourMinute {
+        super(valeur, quoi, true);
+    }
+    /**
      * retarde d'une heure l'instant de la journée
      */
     public void uneHeureDePlus() {

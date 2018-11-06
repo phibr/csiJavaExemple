@@ -45,6 +45,22 @@ public class Duree extends Temps {
         super(texte, quoi, false);
     }
     /**
+     * initialise les heures et les minutes de la durée
+     * 
+     * @param valeur un entier qui donne la durée en minutes
+     * 
+     * @exception ExceptionMauvaiseValeurPourHeure exception indiquant si l'heure est incorrecte (< 0)
+     * @exception ExceptionMauvaiseValeurPourMinute exception indiquant si la minute est incorrecte (< 0 ou > 59)
+     * 
+     * @see ExceptionMauvaiseValeurPourHeure
+     * @see ExceptionMauvaiseValeurPourMinute
+     */
+    public Duree(int valeur)
+    throws ExceptionMauvaiseValeurPourHeure,
+           ExceptionMauvaiseValeurPourMinute {
+        super(valeur, quoi, false);
+    }
+    /**
      * augmente d'une heure la durée
      */
     public void uneHeureDePlus() {

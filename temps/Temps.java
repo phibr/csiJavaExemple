@@ -87,6 +87,27 @@ abstract class Temps implements Comparable<Temps> {
         initialise(h, m, quoi, borneSupHeure);
     }
     /**
+     * initialise les variables d'instance heure et minute
+     * 
+     * @param valeur un entier qui exprime le nombre de minutes
+     * @param quoi une chaîne de caractères précisant la classe de l'objet créé
+     * @param borneSupHeure un booléen qui indique s'il y a une limite à 24h
+     * 
+     * @exception ExceptionMauvaiseValeurPourHeure exception indiquant si l'heure est incorrecte (< 0)
+     * @exception ExceptionMauvaiseValeurPourMinute exception indiquant si la minute est incorrecte (< 0 ou > 59)
+     * 
+     * @see ExceptionMauvaiseValeurPourHeure
+     * @see ExceptionMauvaiseValeurPourMinute
+     */
+    public Temps(int valeur, String quoi, boolean borneSupHeure)
+    throws ExceptionMauvaiseValeurPourHeure,
+           ExceptionMauvaiseValeurPourMinute {
+        int h, m;
+        h = (short)(valeur / 60);
+        m = (byte)(valeur % 60);
+        initialise(h, m, quoi, borneSupHeure);
+    }
+    /**
      * augmente d'une minute le temps considéré
      */
     public void uneMinuteDePlus() {

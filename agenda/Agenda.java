@@ -1,11 +1,6 @@
 package agenda;
 
-import java.util.LinkedList;
-import java.util.Collections;
-import java.io.FileOutputStream;
-import java.io.DataOutputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.sql.*;
 
 /**
  * Agenda représente un ensemble d'événements
@@ -13,20 +8,14 @@ import java.io.IOException;
  * @see Evenement
  */
 public class Agenda {
-    private LinkedList<Evenement> contenu;
-    /**
-     * trie les événements de l'agenda dans l'ordre chronologique
-     */
-    public void trier() {
-        Collections.sort(contenu);
-    }
+    private Connection BD;
     /**
      * constructeur d'agenda
-     * 
-     * crée un agenda vide
      */
-    public Agenda() {
-        contenu = new LinkedList<Evenement>();
+    public Agenda()
+    throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        BD = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda", "root", "");
     }
     /**
      * teste si l'agenda est vide
@@ -34,7 +23,7 @@ public class Agenda {
      * @return vrai quant l'agenda est vide, faux dans le cas contraire
      */
     public boolean estVide() {
-        return contenu.isEmpty();
+        return taille() == 0;
     }
     /**
      * renvoie la taille de l'agenda
@@ -42,7 +31,7 @@ public class Agenda {
      * @return un entier indiquant combien l'agenda contient d'événements
      */
     public int taille() {
-        return contenu.size();
+        // return select count(*) from evenement
     }
     /**
      * ajoute un événement à l'agenda
@@ -50,13 +39,25 @@ public class Agenda {
      * @param e un événement à ajouter à l'agenda
      */
     public void ajouter(Evenement e) {
-        contenu.add(e);
+        // insert into evenement
     }
     /**
      * affiche l'agenda à la console
      */
     public void afficher() {
-        afficher(null);
+        Statement s = BD.createStatement();
+        ResultSet rs;
+        rs = s.executeQuery("select * from evenement");
+        while (rs.next()) {
+            int n = rs.getInt("numero");
+            String txtDate = rs.getString("datevt");
+            int heure = rs.getInt("heure");
+            int duree = rs.getInt("duree");
+            String des = rs.getString("designation");
+            System.out.println(n + "   " + txtDate);
+        }
+        rs.close();
+        // select * from evenement
     }
     /**
      * affiche l'agenda à la console
@@ -64,60 +65,23 @@ public class Agenda {
      * @param particulier un événement à distinguer à l'affichage
      */
     public void afficher(Evenement particulier) {
-        int num = 1;
-        for(Evenement evt : contenu) {
-            if (evt != particulier) {
-                System.out.println("  " + num + ") " + evt);
-            } else {
-                System.out.println("{ " + num + ") " + evt + " }");
-            }
-            num++;
-        }
+        // select * from evenement
     }
     /**
      * renvoie un élément de l'agenda
      * 
-     * @param index un entier indiquant l'événement considéré,
-     * le permier élément étant numéro 1
-     * @return l'événement de l'agenda ayant le numéro index
+     * @param cle un entier indiquant l'événement considéré
+     * @return l'événement de l'agenda ayant la clé cle
      */
-    public Evenement evenement(int index) {
-        return contenu.get(index - 1);
+    public Evenement evenement(int cle) {
+        // select * from evenement where cle = ?
     }
     /**
      * supprime un événement de l'agenda
      * 
      * @param e un événement
      */
-    public void supprimer(Evenement e) {
-        contenu.remove(e);
-    }
-    /**
-     * enregistre l'agenda dans un fichier binaire
-     * 
-     * @param s une instance de DataOutputStream qui représente le fichier
-     * 
-     * @exception IOException une exception levée en cas de problème au cours de l'écriture dans le fichier
-     */
-    public void enregistreDans(DataOutputStream s) throws IOException {
-        s.writeInt(contenu.size());
-        for(Evenement e : contenu) {
-            e.enregistreDans(s);
-        }
-    }
-    /**
-     * charge l'agenda depuis un fichier binaire
-     * 
-     * @param s une instance de DataInputStream qui représente le fichier
-     * 
-     * @exception IOException une exception levée en cas de problème au cours de la lecture dans le fichier
-     */
-    public void chargeDepuis(DataInputStream s) throws IOException {
-        int n = s.readInt();
-        for(int i = 0; i < n; i++) {
-            Evenement e = new Evenement();
-            e.chargeDepuis(s);
-            ajouter(e);
-        }
+    public void supprimer(int cle) {
+        // delete from evenement where cle = ?
     }
 }

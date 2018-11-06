@@ -14,6 +14,7 @@ import java.io.IOException;
 public class Evenement implements Comparable<Evenement> {
     private static Heure uneHeure = null;
     private static Heure vingtTroisHeures = null;
+    private int numero;
     private String designation;
     private Date date;
     private Heure heure;
